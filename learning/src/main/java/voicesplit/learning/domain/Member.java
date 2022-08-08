@@ -9,26 +9,44 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 public class Member {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
     private Long Id;
 
+    //회원명
     private String userName;
 
+    //회원나이
     private int age;
 
-    @Enumerated(EnumType.STRING)
-    private PositionEnum position;
+    //지원포지션
+    private String position;
 
+    //사용하는 언어
     @OneToMany(mappedBy = "member")
     private List<Language> languages = new ArrayList<>();
 
-    public Member(String userName, int age, PositionEnum position) {
+    //강의를 듣는 사이트
+    @OneToMany(mappedBy = "member")
+    private List<WebSite> sites = new ArrayList<>();
+
+    public Member(String userName, int age, String position) {
         this.userName = userName;
         this.age = age;
         this.position = position;
     }
+
+    public void addLang(Language lang) {
+        languages.add(lang);
+        lang.setMember(this);
+    }
+
+    public void addWebSite(WebSite site) {
+        sites.add(site);
+        site.setMember(this);
+    }
 }
+
+

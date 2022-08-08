@@ -1,16 +1,12 @@
 package voicesplit.learning.repository;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.Language;
-import voicesplit.learning.domain.LanguageEnum;
 import voicesplit.learning.domain.Member;
-import voicesplit.learning.domain.PositionEnum;
 
 import java.util.List;
 
@@ -29,8 +25,8 @@ class LangRepositoryTest {
     @Rollback
     void save() {
         //given
-        Language lang = new Language(LanguageEnum.Java);
-        Member member1 = new Member("kim1", 1, PositionEnum.BackEnd);
+        Language lang = new Language("JAVA");
+        Member member1 = new Member("kim1", 1, "BACK_END");
         memberRepository.save(member1);
 
         //when
@@ -47,8 +43,8 @@ class LangRepositoryTest {
     @Rollback
     void findAll() {
         //given
-        Language lang1 = new Language(LanguageEnum.Java);
-        Language lang2 = new Language(LanguageEnum.Java);
+        Language lang1 = new Language("JAVA");
+        Language lang2 = new Language("JAVA");
         langRepository.save(lang1);
         langRepository.save(lang2);
 
@@ -63,9 +59,9 @@ class LangRepositoryTest {
     @Rollback(false)
     void findAllById() {
         //given
-        Language lang1 = new Language(LanguageEnum.Java);
-        Language lang2 = new Language(LanguageEnum.Java);
-        Member member = new Member("kim1", 1, PositionEnum.BackEnd);
+        Language lang1 = new Language("JAVA");
+        Language lang2 = new Language("JAVA");
+        Member member = new Member("kim1", 1, "BACK_END");
         memberRepository.save(member);
         langRepository.save(lang1);
         langRepository.save(lang2);

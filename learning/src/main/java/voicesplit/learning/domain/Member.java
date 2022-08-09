@@ -24,23 +24,25 @@ public class Member {
     //지원포지션
     private String position;
 
-    //사용하는 언어
-    @OneToMany(mappedBy = "member")
-    private List<Language> languages = new ArrayList<>();
+    //주 언어
+    private String mainLang;
+
+    //서브 언어
+    private String subLang;
 
     //강의를 듣는 사이트
     @OneToMany(mappedBy = "member")
     private List<WebSite> sites = new ArrayList<>();
 
-    public Member(String userName, int age, String position) {
+    private Member(){
+    }
+
+    public Member(String userName, int age, String position, String mainLang, String subLang) {
         this.userName = userName;
         this.age = age;
         this.position = position;
-    }
-
-    public void addLang(Language lang) {
-        languages.add(lang);
-        lang.setMember(this);
+        this.mainLang = mainLang;
+        this.subLang = subLang;
     }
 
     public void addWebSite(WebSite site) {

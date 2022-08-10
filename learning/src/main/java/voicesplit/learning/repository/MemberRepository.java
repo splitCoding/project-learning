@@ -1,6 +1,7 @@
 package voicesplit.learning.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.Member;
 
 import javax.persistence.EntityManager;
@@ -25,4 +26,7 @@ public class MemberRepository {
         return em.createQuery("select m from Member m", Member.class).getResultList();
     }
 
+    public void removeById(Long id){
+        em.remove(findById(id));
+    }
 }

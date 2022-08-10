@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 public class Subject {
     @Id
     @GeneratedValue
@@ -33,9 +34,5 @@ public class Subject {
         this.name = name;
         this.tutor = tutor;
         this.total = total;
-    }
-
-    public void setSite(WebSite site) {
-        this.site = site;
     }
 }

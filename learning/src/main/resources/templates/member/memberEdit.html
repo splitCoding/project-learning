@@ -3,7 +3,7 @@
 <head th:replace="fragments/header :: header" />
 <body>
 <div class="container">
-    <form role="form" action="/member/new" th:object="${memberForm}"
+    <form role="form" th:object="${memberForm}"
           method="post">
 
         <div class="form-group">
@@ -42,8 +42,9 @@
                 <option value="nodejs">Nodejs</option>
             </select>
         </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-primary">reset</button>
+        <button type="submit" th:formaction="@{/member/{id}/delete (id=${memberForm.id})}" class="btn btn-danger">Delete</button>
     </form>
 </div>
 </body>

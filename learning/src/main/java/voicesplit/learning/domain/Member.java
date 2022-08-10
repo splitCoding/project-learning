@@ -2,6 +2,7 @@ package voicesplit.learning.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import voicesplit.learning.form.MemberUpdateForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,14 +10,15 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Member {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
-    private Long Id;
+    private Long id;
 
     //회원명
-    private String userName;
+    private String username;
 
     //회원나이
     private int age;
@@ -34,17 +36,19 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<WebSite> sites = new ArrayList<>();
 
-    private Member(){
+    //오류방지 생성자
+    private Member() {
     }
 
-    public Member(String userName, int age, String position, String mainLang, String subLang) {
-        this.userName = userName;
+    public Member(String username, int age, String position, String mainLang, String subLang) {
+        this.username = username;
         this.age = age;
         this.position = position;
         this.mainLang = mainLang;
         this.subLang = subLang;
     }
 
+    //웹사이트 추가세팅 메서드
     public void addWebSite(WebSite site) {
         sites.add(site);
         site.setMember(this);

@@ -31,21 +31,43 @@ class MemberServiceTest {
         //when
         Long savedId = memberService.join(member);
         //then
-        Member result = memberService.findById(savedId);
+        Member result = memberRepository.findById(savedId);
         assertThat(member).isEqualTo(result);
     }
 
+    @Test
+    void findById() {
+        //given
+        Member member = new Member("kim", 1, "Front", "Java", "Python");
+        Long savedId = memberRepository.save(member);
+        //when
+        Member result = memberService.findById(savedId);
+        //then
+        assertThat(member).isEqualTo(result);
+    }
 
     @Test
     void findAll() {
         //given
         Member member1 = new Member("kim1", 1, "Front","Java", "Python");
         Member member2 = new Member("kim2", 2, "Back","Java", "Python");
-        memberService.join(member1);
-        memberService.join(member2);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
         //when
         List<Member> resultList = memberService.findAll();
         //then
         assertThat(resultList).contains(member1, member2);
+    }
+
+    @Test
+    void removeById(){
+        //given
+        Member member1 = new Member("kim1", 1, "BACK_END", "Java", "Python");
+        Long savedId = memberRepository.save(member1);
+        //when
+        memberService.removeById(savedId);
+        Member result = memberRepository.findById(savedId);
+        //then
+        assertThat(result).isNull();
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class WebSite {
     @Id
     @GeneratedValue
@@ -31,12 +32,9 @@ public class WebSite {
         this.siteName = siteName;
     }
 
+    //사이트에 강의를 추가하는 메서드
     public void addSubject(Subject subject) {
         subjects.add(subject);
         subject.setSite(this);
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
     }
 }

@@ -25,7 +25,7 @@ class MemberRepositoryTest {
     @Test
     void save() {
         //given
-        Member member = new Member("kim", 1, "BACK_END","Java", "Python");
+        Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
 
         //when
         Long savedId = memberRepository.save(member);
@@ -38,9 +38,9 @@ class MemberRepositoryTest {
     @Test
     void findAll() {
         //given
-        Member member1 = new Member("kim1", 1, "BACK_END","Java", "Python");
-        Member member2 = new Member("kim2", 2, "FRONT_END","Java", "Python");
-        Member member3 = new Member("kim3", 3, "FULL_STACK","Java", "Python");
+        Member member1 = new Member("kim1", 1, "BACK_END", "Java", "Python");
+        Member member2 = new Member("kim2", 2, "FRONT_END", "Java", "Python");
+        Member member3 = new Member("kim3", 3, "FULL_STACK", "Java", "Python");
         memberRepository.save(member1);
         memberRepository.save(member2);
         memberRepository.save(member3);
@@ -48,5 +48,17 @@ class MemberRepositoryTest {
         List<Member> resultList = memberRepository.findAll();
         //then
         assertThat(resultList).contains(member1, member2, member3);
+    }
+
+    @Test
+    void removeById() {
+        //given
+        Member member1 = new Member("kim1", 1, "BACK_END", "Java", "Python");
+        Long savedId = memberRepository.save(member1);
+        //when
+        memberRepository.removeById(savedId);
+        Member result = memberRepository.findById(savedId);
+        //then
+        assertThat(result).isNull();
     }
 }

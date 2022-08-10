@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.Member;
+import voicesplit.learning.form.MemberUpdateForm;
 import voicesplit.learning.repository.MemberRepository;
 
 import java.util.List;
@@ -20,8 +21,21 @@ public class MemberService {
         return member.getId();
     }
 
+    public void updateMember(Long id, MemberUpdateForm update) {
+        Member findMember = memberRepository.findById(id);
+        findMember.setUsername(update.getUsername());
+        findMember.setAge(update.getAge());
+        findMember.setPosition(update.getPosition());
+        findMember.setMainLang(update.getMainLang());
+        findMember.setSubLang(update.getSubLang());
+    }
+
     public Member findById(Long id) {
         return memberRepository.findById(id);
+    }
+
+    public void removeById(Long id) {
+        memberRepository.removeById(id);
     }
 
     public List<Member> findAll() {

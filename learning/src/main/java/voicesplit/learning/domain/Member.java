@@ -2,7 +2,6 @@ package voicesplit.learning.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import voicesplit.learning.form.MemberUpdateForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class Member {
 
     //강의를 듣는 사이트
     @OneToMany(mappedBy = "member")
-    private List<WebSite> sites = new ArrayList<>();
+    private List<MemberAndWebSite> sites = new ArrayList<>();
 
     //오류방지 생성자
     private Member() {
@@ -48,10 +47,11 @@ public class Member {
         this.subLang = subLang;
     }
 
-    //웹사이트 추가세팅 메서드
-    public void addWebSite(WebSite site) {
-        sites.add(site);
-        site.setMember(this);
+    public void addSite(MemberAndWebSite webSiteMember, WebSite site){
+        sites.add(webSiteMember);
+        webSiteMember.setMember(this);
+        site.getMembers().add(webSiteMember);
+        webSiteMember.setSite(site);
     }
 }
 

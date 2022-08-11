@@ -30,4 +30,9 @@ public class WebSiteRepository {
     public List<WebSite> findAll() {
         return em.createQuery("select m from WebSite m", WebSite.class).getResultList();
     }
+
+    public void removeById(Long id){
+        em.remove(findById(id));
+    }
+
 }

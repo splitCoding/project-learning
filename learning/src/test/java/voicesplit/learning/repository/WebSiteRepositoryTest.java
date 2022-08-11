@@ -1,12 +1,11 @@
 package voicesplit.learning.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import voicesplit.learning.domain.Subject;
+import voicesplit.learning.domain.Member;
+import voicesplit.learning.domain.MemberAndWebSite;
 import voicesplit.learning.domain.WebSite;
 
 import java.util.List;
@@ -16,32 +15,50 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback
+//@Rollback(false)
 class WebSiteRepositoryTest {
 
     @Autowired
     WebSiteRepository webSiteRepository;
+
     @Autowired
-    SubjectRepository subjectRepository;
+    MemberRepository memberRepository;
+
+    @Autowired
+    MemberAndWebSiteRepository memberAndWebSiteRepository;
 
     @Test
-    void save() {
+    void saveAndFindById() {
         //given
         WebSite webSite = new WebSite("Inflearn");
-        Subject subject1 = new Subject("스프링1", "김영한", 10);
-        Subject subject2 = new Subject("스프링2", "김영한", 12);
 
         //when
-        subjectRepository.save(subject1);
-        subjectRepository.save(subject2);
         Long savedId = webSiteRepository.save(webSite);
-        webSite.addSubject(subject1);
-        webSite.addSubject(subject2);
         WebSite result = webSiteRepository.findById(savedId);
 
         //then
         assertThat(webSite).isEqualTo(result);
-        assertThat(result.getSubjects()).contains(subject1, subject2);
+    }
+
+    @Test
+    void saveWithMembers() {
+        //given
+        WebSite webSite = new WebSite("인프런");
+        Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
+        MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
+
+        memberRepository.save(member);
+        memberAndWebSiteRepository.save(memberAndWebSite);
+
+        //when
+        Long savedSiteId = webSiteRepository.save(webSite);
+        webSite.addMember(memberAndWebSite, member);
+        WebSite findWebSite = webSiteRepository.findById(savedSiteId);
+
+        //then
+        assertThat(findWebSite).isEqualTo(webSite); //저장된 사이트가 생성한 사이트가 맞는지
+        assertThat(findWebSite.getMembers()).contains(memberAndWebSite); //사이트의 members 리스트에 memberAndWebSite 가 있는지
+        assertThat(memberAndWebSite.getMember()).isEqualTo(member); //memberAndWebSite 의 멤버에 member 가 있는지
     }
 
     @Test
@@ -49,8 +66,10 @@ class WebSiteRepositoryTest {
         //given
         WebSite webSite = new WebSite("Inflearn");
         webSiteRepository.save(webSite);
+
         //when
         WebSite result = webSiteRepository.findByName("Inflearn");
+
         //then
         assertThat(webSite).isEqualTo(result);
     }
@@ -60,12 +79,28 @@ class WebSiteRepositoryTest {
         //given
         WebSite webSite1 = new WebSite("FastCampus");
         WebSite webSite2 = new WebSite("Inflearn");
+
         webSiteRepository.save(webSite1);
         webSiteRepository.save(webSite2);
+
         //when
         List<WebSite> resultList = webSiteRepository.findAll();
+
         //then
         assertThat(resultList).contains(webSite1, webSite2);
+    }
 
+    @Test
+    void removeById() {
+        //given
+        WebSite webSite = new WebSite("Inflearn");
+        Long savedId = webSiteRepository.save(webSite);
+
+        //when
+        webSiteRepository.removeById(savedId);
+        WebSite result = webSiteRepository.findById(savedId);
+
+        //then
+        assertThat(result).isNull();
     }
 }

@@ -13,16 +13,14 @@ import java.util.List;
 public class WebSite {
     @Id
     @GeneratedValue
-    @Column(name = "learningWebSite_id")
     private Long id;
 
     //사이트명
     private String siteName;
 
     //사이트 이용 회원
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @OneToMany(mappedBy = "member")
+    private List<MemberAndWebSite> members = new ArrayList<>();
 
     //사이트에 있는 강의들
     @OneToMany(mappedBy = "site")
@@ -36,5 +34,12 @@ public class WebSite {
     public void addSubject(Subject subject) {
         subjects.add(subject);
         subject.setSite(this);
+    }
+
+    public void addMember(MemberAndWebSite webSiteMember, Member member) {
+        members.add(webSiteMember);
+        webSiteMember.setSite(this);
+        member.getSites().add(webSiteMember);
+        webSiteMember.setMember(member);
     }
 }

@@ -3,10 +3,10 @@ package voicesplit.learning.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.Member;
 import voicesplit.learning.domain.WebSite;
+import voicesplit.learning.domain.MemberAndWebSite;
 
 import java.util.List;
 
@@ -14,16 +14,18 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback
+//@Rollback(false)
 class MemberRepositoryTest {
 
     @Autowired
     MemberRepository memberRepository;
     @Autowired
     WebSiteRepository webSiteRepository;
+    @Autowired
+    MemberAndWebSiteRepository webSiteMemberRepository;
 
     @Test
-    void save() {
+    void saveAndFindById() {
         //given
         Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
 
@@ -33,6 +35,27 @@ class MemberRepositoryTest {
 
         //then
         assertThat(member).isEqualTo(result);
+    }
+
+    @Test
+    void saveWithWebSite() {
+        //given
+        Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
+        WebSite webSite = new WebSite("인프런");
+        MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
+
+        webSiteRepository.save(webSite);
+        webSiteMemberRepository.save(memberAndWebSite);
+
+        //when
+        Long savedMemberId = memberRepository.save(member);
+        member.addSite(memberAndWebSite, webSite);
+        Member findMember = memberRepository.findById(savedMemberId);
+
+        //then
+        assertThat(findMember).isEqualTo(member); //저장된 멤버가 생성한 멤버가 맞는지
+        assertThat(findMember.getSites()).contains(memberAndWebSite); //멤버의 sites 리스트에 memberAndWebSite 가 있는지
+        assertThat(memberAndWebSite.getSite()).isEqualTo(webSite); //memberAndWebSite 의 사이트에 webSite 가 있는지
     }
 
     @Test

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>사이트명</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="site : ${sites}">
+            <td th:text="${site.id}"></td>
+            <td th:text="${site.siteName}"></td>
+            <td>
+                <a th:href="@{/site/{id}/delete (id=${site.id})}" class="btn btn-danger" role="button" th:text="삭제" methods="post"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p th:if="${#lists.isEmpty(sites)}" th:text="|등록된 사이트가 없습니다.|"></p>
+</div>
+</body>
+</html>

@@ -12,4 +12,5 @@ public class MemberForm {
     private String position;
     private String mainLang;
     private String subLang;
+    private String website;
 }

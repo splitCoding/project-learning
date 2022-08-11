@@ -23,8 +23,12 @@ public class WebSite {
     private List<MemberAndWebSite> members = new ArrayList<>();
 
     //사이트에 있는 강의들
-    @OneToMany(mappedBy = "site")
+    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
     private List<Subject> subjects = new ArrayList<>();
+
+    protected WebSite(){
+
+    }
 
     public WebSite(String siteName) {
         this.siteName = siteName;

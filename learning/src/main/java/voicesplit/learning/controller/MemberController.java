@@ -30,7 +30,9 @@ public class MemberController {
         //템플릿에서 다시 받아온 MemberForm 객체안에 값들을 이용하여 Member 객체를 생성후 join 한다.
         Member member = new Member(form.getUsername(), form.getAge(), form.getPosition(),
                 form.getMainLang(), form.getSubLang());
-        memberService.join(member);
+        Long savedId = memberService.join(member);
+        //사용하는 사이트를 추가해준다.
+        memberService.addSite(savedId, form.getWebsite());
         return "redirect:list";
     }
 
@@ -48,6 +50,8 @@ public class MemberController {
         //userId에 해당되는 멤버를 조회하여 모델에 넣어 템플릿을 불러온다.
         Member findMember = memberService.findById(userId);
         MemberUpdateForm updateForm = new MemberUpdateForm(findMember);
+        List<String> siteList = memberService.returnSites(userId);
+        updateForm.setWebsite(siteList.get(0));
         model.addAttribute("memberId", userId);
         model.addAttribute("memberForm", updateForm);
         return "member/memberEdit";

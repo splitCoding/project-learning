@@ -32,7 +32,7 @@ public class Member {
     private String subLang;
 
     //강의를 듣는 사이트
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAndWebSite> sites = new ArrayList<>();
 
     //오류방지 생성자

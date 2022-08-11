@@ -13,6 +13,7 @@ public class MemberUpdateForm {
     private String position;
     private String mainLang;
     private String subLang;
+    private String website;
 
     public MemberUpdateForm() {
 

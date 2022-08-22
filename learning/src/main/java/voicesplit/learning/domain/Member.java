@@ -2,6 +2,7 @@ package voicesplit.learning.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import voicesplit.learning.form.MemberForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -47,7 +48,15 @@ public class Member {
         this.subLang = subLang;
     }
 
-    public void addSite(MemberAndWebSite webSiteMember, WebSite site){
+    public Member(MemberForm form) {
+        username = form.getUsername();
+        age = form.getAge();
+        position = form.getPosition();
+        mainLang = form.getMainLang();
+        subLang = form.getSubLang();
+    }
+
+    public void addSite(MemberAndWebSite webSiteMember, WebSite site) {
         sites.add(webSiteMember);
         webSiteMember.setMember(this);
         site.getMembers().add(webSiteMember);

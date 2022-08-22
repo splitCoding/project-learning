@@ -18,6 +18,9 @@ public class WebSite {
     //사이트명
     private String siteName;
 
+    //사이트URL
+    private String siteURL;
+
     //사이트 이용 회원
     @OneToMany(mappedBy = "member")
     private List<MemberAndWebSite> members = new ArrayList<>();
@@ -30,8 +33,9 @@ public class WebSite {
 
     }
 
-    public WebSite(String siteName) {
+    public WebSite(String siteName, String siteURL) {
         this.siteName = siteName;
+        this.siteURL = siteURL;
     }
 
     //사이트에 강의를 추가하는 메서드

@@ -41,7 +41,7 @@ class MemberRepositoryTest {
     void saveWithWebSite() {
         //given
         Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
-        WebSite webSite = new WebSite("인프런");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
         MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
 
         webSiteRepository.save(webSite);

@@ -7,6 +7,7 @@ import voicesplit.learning.domain.Member;
 import voicesplit.learning.domain.MemberAndWebSite;
 import voicesplit.learning.domain.WebSite;
 import voicesplit.learning.form.MemberUpdateForm;
+import voicesplit.learning.form.WebSiteForm;
 import voicesplit.learning.repository.MemberAndWebSiteRepository;
 import voicesplit.learning.repository.MemberRepository;
 import voicesplit.learning.repository.WebSiteRepository;
@@ -45,20 +46,18 @@ public class MemberService {
     }
 
     public void updateMember(Long id, MemberUpdateForm update) {
+        System.out.println("update.getId() = " + update.getId());
         Member findMember = memberRepository.findById(id);
         findMember.setUsername(update.getUsername());
         findMember.setAge(update.getAge());
         findMember.setPosition(update.getPosition());
         findMember.setMainLang(update.getMainLang());
         findMember.setSubLang(update.getSubLang());
-        if(findMember.getSites().size() > 0){
-            findMember.getSites().get(0).getSite().setSiteName(update.getWebsite());
-        }
     }
 
-    public void addSite(Long id, String website) {
+    public void addSite(Long id, WebSiteForm website) {
         Member findMember = memberRepository.findById(id);
-        WebSite webSite = new WebSite(website);
+        WebSite webSite = new WebSite(website.getSiteName(), website.getSiteURL());
         MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
         webSiteRepository.save(webSite);
         memberAndWebSiteRepository.save(memberAndWebSite);

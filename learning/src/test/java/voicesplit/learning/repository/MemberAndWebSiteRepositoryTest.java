@@ -58,7 +58,7 @@ class MemberAndWebSiteRepositoryTest {
         //given
         MemberAndWebSite webSiteMember = new MemberAndWebSite();
         Member member = new Member("kim1",23,"front", "Java", "Python");
-        WebSite webSite = new WebSite("인프런");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
 
         webSiteMemberRepository.save(webSiteMember);
         webSiteRepository.save(webSite);
@@ -78,7 +78,7 @@ class MemberAndWebSiteRepositoryTest {
         //given
         MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
         Member member = new Member("kim2",233,"front", "Java", "Python");
-        WebSite webSite = new WebSite("인프런");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
 
         webSiteMemberRepository.save(memberAndWebSite);
         memberRepository.save(member);

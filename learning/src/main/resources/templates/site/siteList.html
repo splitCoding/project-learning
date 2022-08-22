@@ -8,14 +8,16 @@
         <tr>
             <th>#</th>
             <th>사이트명</th>
+            <th>사이트URL</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="site : ${sites}">
             <td th:text="${site.id}"></td>
             <td th:text="${site.siteName}"></td>
+            <td th:text="${site.siteURL}"></td>
             <td>
-                <a th:href="@{/site/{id}/delete (id=${site.id})}" class="btn btn-danger" role="button" th:text="삭제" methods="post"></a>
+                <a th:href="@{/site/{id}/edit (id=${site.id})}" class="btn btn-danger" role="button" th:text="수정"></a>
             </td>
         </tr>
         </tbody>

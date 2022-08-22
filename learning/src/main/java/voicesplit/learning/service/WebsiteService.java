@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.WebSite;
+import voicesplit.learning.form.WebSiteUpdateForm;
 import voicesplit.learning.repository.WebSiteRepository;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class WebsiteService {
 
     public List<WebSite> findAll() {
         return webSiteRepository.findAll();
+    }
+
+    public void updateSite(Long id, WebSiteUpdateForm updateForm){
+        WebSite updateSite = webSiteRepository.findById(id);
+        updateSite.setSiteName(updateForm.getSiteName());
+        updateSite.setSiteURL(updateForm.getSiteURL());
     }
 
     public void removeById(Long id) {

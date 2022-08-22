@@ -30,7 +30,7 @@ class WebSiteRepositoryTest {
     @Test
     void saveAndFindById() {
         //given
-        WebSite webSite = new WebSite("Inflearn");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
 
         //when
         Long savedId = webSiteRepository.save(webSite);
@@ -43,7 +43,7 @@ class WebSiteRepositoryTest {
     @Test
     void saveWithMembers() {
         //given
-        WebSite webSite = new WebSite("인프런");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
         Member member = new Member("kim", 1, "BACK_END", "Java", "Python");
         MemberAndWebSite memberAndWebSite = new MemberAndWebSite();
 
@@ -64,11 +64,11 @@ class WebSiteRepositoryTest {
     @Test
     void findByName() {
         //given
-        WebSite webSite = new WebSite("Inflearn");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
         webSiteRepository.save(webSite);
 
         //when
-        WebSite result = webSiteRepository.findByName("Inflearn");
+        WebSite result = webSiteRepository.findByName("인프런");
 
         //then
         assertThat(webSite).isEqualTo(result);
@@ -77,8 +77,9 @@ class WebSiteRepositoryTest {
     @Test
     void findAll() {
         //given
-        WebSite webSite1 = new WebSite("FastCampus");
-        WebSite webSite2 = new WebSite("Inflearn");
+        WebSite webSite1 = new WebSite("패스트캠퍼스", "https://fastcampus.co.kr");
+        WebSite webSite2 = new WebSite("인프런", "https://inflearn.com");
+
 
         webSiteRepository.save(webSite1);
         webSiteRepository.save(webSite2);
@@ -93,7 +94,7 @@ class WebSiteRepositoryTest {
     @Test
     void removeById() {
         //given
-        WebSite webSite = new WebSite("Inflearn");
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
         Long savedId = webSiteRepository.save(webSite);
 
         //when

@@ -8,12 +8,18 @@
 
         <div class="form-group">
             <label th:for="siteName">사이트</label>
-            <select th:field="*{siteName}" class="form-control">
-                <option value="인프런">인프런</option>
-                <option value="패스트캠퍼스">패스트캠퍼스</option>
-                <option value="제로베이스">제로베이스</option>
-                <option value="생활코딩">생활코딩</option>
-            </select>
+            <input type="text" th:field="*{siteName}" class="form-control">
+<!--            <select th:field="*{siteName}" class="form-control">-->
+<!--                <option value="인프런">인프런</option>-->
+<!--                <option value="패스트캠퍼스">패스트캠퍼스</option>-->
+<!--                <option value="제로베이스">제로베이스</option>-->
+<!--                <option value="생활코딩">생활코딩</option>-->
+<!--            </select>-->
+        </div>
+
+        <div class="form-group">
+            <label th:for="siteURL">사이트 URL</label>
+            <input type="text" th:field="*{siteURL}" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

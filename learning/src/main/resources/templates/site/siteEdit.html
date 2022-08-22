@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <form role="form"th:object="${updateForm}" method="post">
+        <div class="form-group">
+            <label th:for="siteName">사이트</label>
+            <input type="text" th:field="*{siteName}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:for="siteURL">사이트 URL</label>
+            <input type="text" th:field="*{siteURL}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-primary">reset</button>
+        <button type="submit" th:formaction="@{/site/{id}/delete (id=${updateForm.id})}" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

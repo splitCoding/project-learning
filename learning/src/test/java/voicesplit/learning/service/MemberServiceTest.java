@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import voicesplit.learning.domain.Member;
+import voicesplit.learning.form.MemberUpdateForm;
 import voicesplit.learning.repository.MemberRepository;
 import voicesplit.learning.repository.MemberAndWebSiteRepository;
 import voicesplit.learning.repository.WebSiteRepository;
@@ -67,5 +68,23 @@ class MemberServiceTest {
         Member result = memberRepository.findById(savedId);
         //then
         assertThat(result).isNull();
+    }
+
+    @Test
+    void updateMember(){
+        //given
+        Member member1 = new Member("kim1", 1, "BACK_END", "Java", "Python");
+        Long savedId = memberRepository.save(member1);
+        MemberUpdateForm memberUpdateForm = new MemberUpdateForm(member1);
+        memberUpdateForm.setAge(2);
+        memberUpdateForm.setPosition("front");
+
+        //when
+        memberService.updateMember(savedId, memberUpdateForm);
+        Member findMember = memberRepository.findById(savedId);
+
+        //then
+        assertThat(findMember.getAge()).isEqualTo(2);
+        assertThat(findMember.getPosition()).isEqualTo("front");
     }
 }

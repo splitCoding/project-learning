@@ -9,6 +9,8 @@ import voicesplit.learning.form.MemberForm;
 import voicesplit.learning.form.MemberUpdateForm;
 import voicesplit.learning.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -19,7 +21,7 @@ public class MemberController {
     private final MemberService memberService = new MemberService();
 
     @GetMapping("/new")
-    public String memberForm(Model model) {
+    public String form(Model model) {
         //모델에 템플렛에서 사용할 MemberForm 객체를 넣어서 템플릿을 불러온다.
         model.addAttribute("memberForm", new MemberForm());
         return "member/createMemberForm";
@@ -28,11 +30,8 @@ public class MemberController {
     @PostMapping("/new")
     public String join(MemberForm form) {
         //템플릿에서 다시 받아온 MemberForm 객체안에 값들을 이용하여 Member 객체를 생성후 join 한다.
-        Member member = new Member(form.getUsername(), form.getAge(), form.getPosition(),
-                form.getMainLang(), form.getSubLang());
-        Long savedId = memberService.join(member);
-        //사용하는 사이트를 추가해준다.
-        memberService.addSite(savedId, form.getWebsite());
+        Member member = new Member(form);
+        memberService.join(member);
         return "redirect:list";
     }
 
@@ -45,26 +44,23 @@ public class MemberController {
     }
 
     @GetMapping("/{userId}/edit")
-    public String showUser(@PathVariable("userId") Long userId, Model model) {
+    public String edit(@PathVariable("userId") Long userId, Model model) {
         //localhost:8080/member/{userId}
         //userId에 해당되는 멤버를 조회하여 모델에 넣어 템플릿을 불러온다.
         Member findMember = memberService.findById(userId);
         MemberUpdateForm updateForm = new MemberUpdateForm(findMember);
-        List<String> siteList = memberService.returnSites(userId);
-        updateForm.setWebsite(siteList.get(0));
-        model.addAttribute("memberId", userId);
-        model.addAttribute("memberForm", updateForm);
+        model.addAttribute("updateForm", updateForm);
         return "member/memberEdit";
     }
 
     @PostMapping("/{userId}/edit")
-    public String updateUser(@PathVariable("userId") Long id, @ModelAttribute("memberForm") MemberUpdateForm update) {
+    public String update(@PathVariable("userId") Long id,  @ModelAttribute("updateForm") MemberUpdateForm update) {
         memberService.updateMember(id, update);
         return "redirect:/member/list";
     }
 
     @PostMapping("/{userId}/delete")
-    public String removeUser(@PathVariable("userId") Long id, Model model){
+    public String remove(@PathVariable("userId") Long id, Model model){
         memberService.removeById(id);
         return "redirect:/member/list";
     }

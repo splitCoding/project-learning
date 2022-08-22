@@ -3,6 +3,7 @@ package voicesplit.learning.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import voicesplit.learning.domain.Subject;
 import voicesplit.learning.domain.WebSite;
 import voicesplit.learning.form.WebSiteUpdateForm;
 import voicesplit.learning.repository.WebSiteRepository;
@@ -32,6 +33,10 @@ public class WebsiteService {
         WebSite updateSite = webSiteRepository.findById(id);
         updateSite.setSiteName(updateForm.getSiteName());
         updateSite.setSiteURL(updateForm.getSiteURL());
+    }
+
+    public void addSubject(WebSite site, Subject subject){
+        site.addSubject(subject);
     }
 
     public void removeById(Long id) {

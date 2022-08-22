@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class MemberAndWebSite {
     @Id
     @GeneratedValue
+    @Column(name = "memberAndWebSite_id")
     private Long id;
 
     @ManyToOne

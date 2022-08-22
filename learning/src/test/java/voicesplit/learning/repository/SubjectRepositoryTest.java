@@ -56,4 +56,21 @@ class SubjectRepositoryTest {
         assertThat(resultList).contains(subject1, subject2);
 
     }
+
+    @Test
+    void removeById(){
+        //given
+        Subject subject1 = new Subject("스프링", "김영한",10);
+        Long savedId = subjectRepository.save(subject1);
+        Subject findSubject1 = subjectRepository.findById(savedId);
+
+        //when
+        subjectRepository.removeById(savedId);
+        Subject findSubject2 = subjectRepository.findById(savedId);
+
+        //then
+        assertThat(findSubject1).isNotNull();
+        assertThat(findSubject2).isNull();
+
+    }
 }

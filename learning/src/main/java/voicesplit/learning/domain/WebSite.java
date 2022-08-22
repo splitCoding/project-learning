@@ -13,6 +13,7 @@ import java.util.List;
 public class WebSite {
     @Id
     @GeneratedValue
+    @Column(name = "site_id")
     private Long id;
 
     //사이트명
@@ -26,7 +27,7 @@ public class WebSite {
     private List<MemberAndWebSite> members = new ArrayList<>();
 
     //사이트에 있는 강의들
-    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "site")
     private List<Subject> subjects = new ArrayList<>();
 
     protected WebSite(){

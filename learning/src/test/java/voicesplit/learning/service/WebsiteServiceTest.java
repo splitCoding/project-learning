@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import voicesplit.learning.domain.Subject;
 import voicesplit.learning.domain.WebSite;
 import voicesplit.learning.form.WebSiteUpdateForm;
+import voicesplit.learning.repository.SubjectRepository;
 import voicesplit.learning.repository.WebSiteRepository;
 
 import java.util.List;
@@ -22,7 +24,7 @@ class WebsiteServiceTest {
     WebsiteService websiteService;
 
     @Autowired
-    WebSiteRepository webSiteRepository;
+    SubjectRepository subjectRepository;
 
     @Test
     void saveAndFindById() {
@@ -85,5 +87,22 @@ class WebsiteServiceTest {
 
         //then
         assertThat(findSiteAfter).isNull();
+    }
+
+    @Test
+    void addSubject() {
+        //given
+        WebSite webSite = new WebSite("인프런", "https://inflearn.com");
+        Long savedWebsiteId = websiteService.save(webSite);
+        Subject subject = new Subject("강의1", "선생1", 30);
+        Long savedSubjectId = subjectRepository.save(subject);
+
+        //when
+        WebSite findWebSite = websiteService.findById(savedWebsiteId);
+        webSite.addSubject(subject);
+
+        //then
+        assertThat(webSite.getSubjects().size()).isEqualTo(1);
+        assertThat(subject.getSite()).isEqualTo(findWebSite);
     }
 }

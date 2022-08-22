@@ -3,6 +3,7 @@
 <head th:replace="fragments/header :: header" />
 <body>
 <div class="container">
+<!--    <a th:href="@{/site/{id}/subject/new (id=${updateForm.id})}">강의 추가하기</a>-->
     <form role="form"th:object="${updateForm}" method="post">
         <div class="form-group">
             <label th:for="siteName">사이트</label>

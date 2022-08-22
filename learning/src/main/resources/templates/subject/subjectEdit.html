@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <form role="form" th:object="${subjectUpdateForm}" method="post">
+
+        <div class="form-group">
+            <label th:for="siteId">사이트</label>
+            <select th:field="*{siteId}" class="form-control">
+                <option value="">-- 사이트 선택 --</option>
+                <option th:each="site : ${siteList}" th:value="${site?.id}"
+                        th:utext="${site?.siteName}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="name">강의 명</label>
+            <input type="text" th:field="*{name}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:for="tutor">강사 명</label>
+            <input type="text" th:field="*{tutor}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:for="total">총 강의 수</label>
+            <input type="text" th:field="*{total}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-primary">reset</button>
+        <button type="submit" th:formaction="@{/subject/{id}/delete (id=${subjectUpdateForm.id})}" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

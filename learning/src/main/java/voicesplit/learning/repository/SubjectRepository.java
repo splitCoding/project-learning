@@ -30,4 +30,8 @@ public class SubjectRepository {
     public List<Subject> findAll() {
         return em.createQuery("select m from Subject m").getResultList();
     }
+
+    public void removeById(Long id){
+        em.remove(findById(id));
+    }
 }

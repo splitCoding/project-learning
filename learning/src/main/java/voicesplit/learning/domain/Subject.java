@@ -3,7 +3,7 @@ package voicesplit.learning.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import voicesplit.learning.repository.WebSiteRepository;
+import voicesplit.learning.form.SubjectForm;
 
 import javax.persistence.*;
 
@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Subject {
     @Id
     @GeneratedValue
-    @Column(name = "videoClass_id")
+    @Column(name = "subject_id")
     private Long id;
 
     //강의명
@@ -30,9 +30,25 @@ public class Subject {
     //총강의 수
     private int total;
 
+    public Subject() {
+
+    }
+
+    public void updateSite(WebSite site) {
+        this.site.getSubjects().remove(this);
+        this.site = site;
+        site.getSubjects().add(this);
+    }
+
     public Subject(String name, String tutor, int total) {
         this.name = name;
         this.tutor = tutor;
         this.total = total;
+    }
+
+    public Subject(SubjectForm subjectForm) {
+        name = subjectForm.getName();
+        tutor = subjectForm.getTutor();
+        total = subjectForm.getTotal();
     }
 }
